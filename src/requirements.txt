@@ -1,0 +1,15 @@
+anthropic
+antlr4-python3-runtime==4.11
+attrs
+google-cloud-aiplatform>=1.38
+google-generativeai
+jupyterlab
+matplotlib
+openai
+numpy
+pandas
+scipy
+sentencepiece
+sympy
+tiktoken
+together

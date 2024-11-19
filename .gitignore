@@ -1,0 +1,12 @@
+.DS_Store
+.ipynb_checkpoints
+**/__pycache__
+
+*.png
+
+secrets.sh
+
+data/raw.zip
+data/raw
+data/MATH
+data/prm800k
