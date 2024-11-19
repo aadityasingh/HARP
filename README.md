@@ -20,3 +20,14 @@ In addition to the dataset and paper, this repo also include all our code for co
 - `year`/`contest`/`number`: Three fields that jointly uniquely identify the source problem
 - `level`: Difficulty level
 - `subject`: Subject label for the problem -- one of `['prealgebra', 'algebra', 'number_theory', 'geometry', 'counting_and_probability', 'precalculus']`
+
+## Citation
+
+```
+@article{yue2024hardmath,
+    title={{HARD}-Math: A challenging human-annotated math reasoning benchmark},
+    author={Albert S. Yue and Lovish Madaan and Ted Moskovitz and DJ Strouse and Aaditya K. Singh},
+    year={2024},
+    url={https://github.com/aadityasingh/HARD-Math}
+}
+```
