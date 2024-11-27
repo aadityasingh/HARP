@@ -1,4 +1,4 @@
-# HARD-Math source
+# HARP source
 
 To be updated with more details soon. Contact [albert.s.yue@gmail.com](mailto:albert.s.yue@gmail.com) with questions.
 
@@ -26,4 +26,4 @@ We also have the following scripts:
     2. `hendrycks_math_duplicate_find.py`
     3. `hendrycks_math_duplicate_sync.py`
 - A script to run evals on MATH-500 `run_math500_eval.py`, along with some helper functions for subsequent answer checking
-- A script to run the various evals we conducted on HARD-Math `run_eval.py`. Note that we did not really use this script except for Llama 3.1 evals, as we leveraged batch apis for the other model families we explored
+- A script to run the various evals we conducted on HARP `run_eval.py`. While tested, we did not really use this script except for Llama 3.1 evals, as we leveraged batch apis for the other model families we explored

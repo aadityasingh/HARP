@@ -1,12 +1,12 @@
-# HARD-Math
+# HARP
 
-Human Annotated Reasoning Dataset for Math (**HARD-Math**) is a math reasoning dataset consisting of 4,780 short answer questions from US national math competitions, spanning from 1950 to Sept. 2024. The paper can be found at [HARD_Math.pdf](HARD_Math.pdf).
+Human Annotated Reasoning Problems (**HARP**) is a math reasoning dataset consisting of 4,780 short answer questions from US national math competitions, spanning from 1950 to Sept. 2024. The paper can be found at [HARP.pdf](HARP.pdf).
 
 We release a few splits of our dataset: 
-- [HARD-Math.jsonl.zip](HARD-Math.zip) consists of 4,780 short answer questions and is the **default** split for running the evaluation.
-- [HARD-Math_mcq.jsonl.zip](HARD-Math_mcq.zip) consists of 4,110 multiple choice questions.
-- [HARD-Math_proof-based.jsonl.zip](HARD-Math_proof-based.zip) consists of 310 proof-based problems.
-- [HARD-Math_raw.jsonl.zip](HARD-Math_raw.zip) consists of all 5,409 problems we scraped and processed.
+- [HARP.jsonl.zip](HARP.zip) consists of 4,780 short answer questions and is the **default** split for running the evaluation.
+- [HARP_mcq.jsonl.zip](HARP_mcq.zip) consists of 4,110 multiple choice questions.
+- [HARP_proof-based.jsonl.zip](HARP_proof-based.zip) consists of 310 proof-based problems.
+- [HARP_raw.jsonl.zip](HARP_raw.zip) consists of all 5,409 problems we scraped and processed.
 
 We provide all jsonl files in zip format, to avoid leaking the data in plain text (and thus hopefully mitigate contamination).
 
@@ -24,10 +24,10 @@ In addition to the dataset and paper, this repo also include all our code for co
 ## Citation
 
 ```
-@misc{yue2024hardmath,
-    title={{HARD}-Math: A challenging human-annotated math reasoning benchmark},
+@misc{yue2024harp,
+    title={{HARP}: A challenging human-annotated math reasoning benchmark},
     author={Albert S. Yue and Lovish Madaan and Ted Moskovitz and DJ Strouse and Aaditya K. Singh},
     year={2024},
-    url={https://github.com/aadityasingh/HARD-Math}
+    url={https://github.com/aadityasingh/HARP}
 }
 ```

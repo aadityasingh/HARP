@@ -1,5 +1,5 @@
 """
-Makes the three HARD-Math datasets for use by the community.
+Makes the three HARP datasets for use by the community.
 
 These files correspond to the three main use cases that we currently foresee in terms of answer format:
     - shortans_dataset.jsonl: Short answer, where the final answer is a short phrase or math expression

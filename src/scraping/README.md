@@ -1,6 +1,6 @@
 # Pipeline
 
-We create the HARD-Math dataset and splits by running a series of python scripts. The full pipeline to create the full dataset and three splits is as follows:
+We create the HARP dataset and splits by running a series of python scripts. The full pipeline to create the full dataset and three splits is as follows:
 ```
 python src/scraping/get.py && \
 	python src/scraping/process.py > scraping/log.txt && \

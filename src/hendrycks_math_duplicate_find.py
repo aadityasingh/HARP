@@ -113,11 +113,11 @@ with __name__ == "__main__":
     axs[0].hist(depths)
     axs[0].set_xlabel('Length of matching prefix')
     axs[0].set_ylabel('# Problems')
-    axs[0].set_title('Maximum prefix match of HARD problems to any\nMATH problem')
+    axs[0].set_title('Maximum prefix match of HARP problems to any\nMATH problem')
 
     axs[1].hist(fracs)
-    axs[1].set_title('Maximum prefix match of HARD problems to any,\nMATH problemnormalized by problem length')
-    axs[1].set_xlabel('Length of matching prefix / Length of HARD problem')
+    axs[1].set_title('Maximum prefix match of HARP problems to any,\nMATH problemnormalized by problem length')
+    axs[1].set_xlabel('Length of matching prefix / Length of HARP problem')
 
     fig.savefig('duplicate_stats.png')
 
