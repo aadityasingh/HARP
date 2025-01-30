@@ -1,8 +1,9 @@
+import ctypes
 import json
+import multiprocessing as mp
+import queue
 from collections.abc import Iterable
 from pathlib import Path
-import threading
-import ctypes
 from typing import Any, Callable, Optional, TypeVar
 
 import numpy as np
@@ -88,32 +89,45 @@ def download_blob(bucket_name: str, source_blob_name: str, dest_file_name: str) 
 T = TypeVar('T')
 
 def run_with_timeout(func: Callable[..., T], timeout_seconds: float, default: Any,
-                        *args: Any, **kwargs: Any) -> Optional[T]:
+                     *args: Any, **kwargs: Any) -> Optional[T]:
     """
-    Run a function with a timeout, forcefully terminating if it doesn't complete in time.
+    Run a function with a timeout using multiprocessing.
+    
+    Args:
+        func: The function to run
+        timeout_seconds: Maximum time to wait for completion
+        default: Value to return if the function times out
+        *args: Positional arguments to pass to the function
+        **kwargs: Keyword arguments to pass to the function
+    
+    Returns:
+        The function result or default value if timeout occurs
     """
-    result = []
-    def worker():
+    def worker(queue: mp.Queue) -> None:
         try:
-            result.append(func(*args, **kwargs))
+            result = func(*args, **kwargs)
+            queue.put(result)
         except Exception as e:
             print(f"Function failed with error: {str(e)}")
-            result.append(None)
-    
-    thread = threading.Thread(target=worker)
-    thread.daemon = True
-    thread.start()
-    thread.join(timeout_seconds)
-    
-    if thread.is_alive():
-        # Get thread ID and raise exception in the thread
-        for thread_id, active_thread in threading._active.items():
-            if active_thread is thread:
-                ctypes.pythonapi.PyThreadState_SetAsyncExc(
-                    ctypes.c_long(thread_id),
-                    ctypes.py_object(SystemExit))
-                print(f"Function timed out after {timeout_seconds} seconds")
-                print(args, kwargs)
-                return default
-    
-    return result[0] if result else default
+            queue.put(None)
+
+    q = mp.Queue()
+    process = mp.Process(target=worker, args=(q,))
+    process.start()
+
+    try:
+        result = q.get(timeout=timeout_seconds)
+        process.join()
+        return result
+    except (mp.TimeoutError, queue.Empty):
+        print(f"Function timed out after {timeout_seconds} seconds")
+        print(args, kwargs)
+        process.terminate()
+        process.join()  # Clean up the terminated process
+        return default
+    finally:
+        # Ensure process is terminated and cleaned up
+        if process.is_alive():
+            process.terminate()
+            process.join()
+

@@ -1,6 +1,6 @@
 # HARP
 
-Human Annotated Reasoning Problems (**HARP**) is a math reasoning dataset consisting of 4,780 short answer questions from US national math competitions, spanning from 1950 to Sept. 2024. The paper can be found at [HARP.pdf](HARP.pdf) or on arxiv: [https://arxiv.org/abs/2412.08819](https://arxiv.org/abs/2412.08819).
+Human Annotated Reasoning Problems (**HARP**) is a math reasoning dataset consisting of 4,780 short answer questions from US national math competitions, spanning from 1950 to Sept. 2024. The paper can be found at [HARP.pdf](HARP.pdf).
 
 We release a few splits of our dataset: 
 - [HARP.jsonl.zip](HARP.zip) consists of 4,780 short answer questions and is the **default** split for running the evaluation.
@@ -24,13 +24,10 @@ In addition to the dataset and paper, this repo also include all our code for co
 ## Citation
 
 ```
-@misc{yue2024harpchallenginghumanannotatedmath,
-      title={HARP: A challenging human-annotated math reasoning benchmark}, 
-      author={Albert S. Yue and Lovish Madaan and Ted Moskovitz and DJ Strouse and Aaditya K. Singh},
-      year={2024},
-      eprint={2412.08819},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2412.08819}, 
+@misc{yue2024harp,
+    title={{HARP}: A challenging human-annotated math reasoning benchmark},
+    author={Albert S. Yue and Lovish Madaan and Ted Moskovitz and DJ Strouse and Aaditya K. Singh},
+    year={2024},
+    url={https://github.com/aadityasingh/HARP}
 }
 ```

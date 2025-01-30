@@ -1,16 +1,12 @@
 from __future__ import annotations
 
-import json
-from pathlib import Path
 from typing import Any
 
-import click
-from tqdm.auto import tqdm
+import pandas as pd
 
 from eval.api import ModelAPI, safe_unified_api_call
 from eval.prompt import create_prompt
-from eval.response import ModelResponse
-from eval.utils import AMC_LETTER_CHOICES, read_jsonl, get_uid
+from eval.utils import AMC_LETTER_CHOICES, get_uid
 
 
 def run_one(
@@ -182,8 +178,9 @@ def make_answer_check_dict_from_jsonl(
                 "finish_reason": finish_reason,
                 "generated_text": resp_text,
                 "answer": prob["answer"],
-                "answer_choice": prob["answer_choice"],
             }
+            if "answer_choice" in prob:
+                a["answer_choice"] = prob["answer_choice"]
             answer_check_dicts.append(a)
     return answer_check_dicts
 
@@ -192,7 +189,7 @@ def make_choice_check_dict_from_jsonl(
     responses: list[str, Any], dataset_map: dict[str, dict[str, Any]]
 ) -> list[dict[str, str]]:
     """
-    Like `make_choice_check_dict_from_jsonl`, but for `latex_choice_check`
+    Like `make_answer_check_dict_from_jsonl`, but for `latex_choice_check`
 
     Args:
         responses: parsed responses from the raw saved eval file. Can be slightly different
@@ -227,3 +224,50 @@ def make_choice_check_dict_from_jsonl(
                 }
                 answer_check_dicts.append(a)
     return answer_check_dicts
+
+
+def make_results_df(responses, answer_check_results, dataset_map, mode="shortans"):
+    results_metadata = []
+    for resp, acr in zip(responses, answer_check_results):
+        problem = dataset_map[resp["uid"]]
+    
+        # some problems may be fixed after running the eval, so this is to sanity check
+        if mode == "shortans" and problem["multiple_choice_only"]:
+            print(f"WARNING: found eval for mcq-only problem {resp['uid']}")
+            continue
+        elif mode == "mcq" and (problem["contest"].startswith("AIME") or problem["contest"].endswith("MO")):
+            print(f"WARNING: found eval for non-mcq contest problem {resp['uid']}")
+            continue
+        
+        level = problem["level"]
+        subject = problem["subject"]
+        has_asy_problem = "[asy]" in problem["problem"]
+        has_asy_solution = "[asy]" in problem["solution_1"]  # only look at first solution for now
+        reason = resp["response"].completions[0].finish_reason.value
+        usage = resp["response"].usage
+        results_metadata.append({
+            "uid": resp["uid"],
+            "level": level,
+            "subject": subject,
+            "mcq_only": problem["multiple_choice_only"],
+            "has_asy_problem": has_asy_problem,
+            "has_asy_solution": has_asy_solution,
+            "reason": reason,
+            "is_correct": acr["is_correct"],
+            "answer": acr["answer"],
+            "predict": acr["predict"],
+            "input_tokens": usage.input_tokens,
+            "output_tokens": usage.output_tokens,
+            "reasoning_tokens": usage.reasoning_tokens,
+        })
+    results_metadata = pd.DataFrame(results_metadata).set_index("uid")
+    return results_metadata
+
+
+def accuracy_by_split(df, col_name):
+    counts = df.value_counts(col_name).sort_index().to_frame()
+    acc = (
+        100 * df.groupby(col_name)["is_correct"].sum()
+        / df.groupby(col_name)["is_correct"].count()
+    )
+    return pd.concat([counts, acc], axis=1).rename(columns={"is_correct": "accuracy"})

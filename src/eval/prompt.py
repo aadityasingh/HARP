@@ -166,5 +166,4 @@ def create_prompt(
             "content": ending_assistant_prompt,
         })
 
-
     return Prompt(messages=messages, system=system_prompt)

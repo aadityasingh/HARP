@@ -414,7 +414,7 @@ def latex_answer_check(
     eval_policy: str = "aggressive",
     debug: bool = False,
     use_tqdm: bool = False,
-    timeout=10,
+    timeout: int = 10,
 ) -> list[dict[str, Any]]:
     """Check answers for a list of model generations on short answer problems"""
     if use_tqdm:
@@ -424,21 +424,22 @@ def latex_answer_check(
     for prob in question_answer_list:
         model_ans = prob["generated_text"] if prob["finish_reason"] == "stop" else None
         gt = prob["answer"]
-        out = run_with_timeout(check_one_latex_answer,
-                                10,
-                                {
-                                    "generated_text": model_ans,
-                                    "answer": gt,
-                                    "predict": None,
-                                    "is_correct": False,
-                                    "is_literal_correct": False
-                                },
-                                model_ans,
-                                gt,
-                                extract_policy=extract_policy,
-                                eval_policy=eval_policy,
-                                debug=debug,
-                            )
+        out = run_with_timeout(
+            check_one_latex_answer,
+            timeout,
+            {
+                "generated_text": model_ans,
+                "answer": gt,
+                "predict": None,
+                "is_correct": False,
+                "is_literal_correct": False
+            },
+            model_ans,
+            gt,
+            extract_policy=extract_policy,
+            eval_policy=eval_policy,
+            debug=debug,
+        )
         results.append({**prob, **out})
 
     return results
@@ -468,11 +469,12 @@ def latex_answer_choice_check(
         )
         
         # sanity check that I've enabled before and saw no errors
-        # model_ans_choice = extract_answer(model_ans, EXTRACT_RE_PATTERNS) if model_ans is not None else "F"
-        # model_ans_choice = remove_boxes_keep_content(clean_answer(model_ans_choice))
-        # gt_choice = remove_boxes_keep_content(clean_answer(gt))
-        # if out["is_correct"] != (model_ans_choice == gt_choice):
-        #     print("WARNING: answer checker didnt match exact match:", out)
+        # if model_ans is not None:
+        #     model_ans_choice = extract_answer(model_ans, EXTRACT_RE_PATTERNS)
+        #     model_ans_choice = remove_boxes_keep_content(clean_answer(model_ans_choice))
+        #     gt_choice = remove_boxes_keep_content(clean_answer(gt))
+        #     if out["is_correct"] != (model_ans_choice == gt_choice):
+        #         print("WARNING: answer checker didnt match exact match:", out)
         
         results.append({**prob, **out})
 
@@ -514,3 +516,4 @@ def latex_choice_check(
         results.append({**by_choice_dict, **prob})
 
     return results
+

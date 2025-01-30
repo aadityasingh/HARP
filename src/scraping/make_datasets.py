@@ -1,17 +1,17 @@
 """
-Makes the three HARP datasets for use by the community.
+Makes the three HARP datasets for use by the community, along with the raw dataset with all problems
 
 These files correspond to the three main use cases that we currently foresee in terms of answer format:
-    - shortans_dataset.jsonl: Short answer, where the final answer is a short phrase or math expression
+    - HARP.jsonl: Short answer, where the final answer is a short phrase or math expression
         that can be verified with our answer checker
-    - mcq_dataset.jsonl: Multiple-choice, where the final answer is a letter choice A-E.
+    - HARP_mcq.jsonl: Multiple-choice, where the final answer is a letter choice A-E.
         We also shuffle the choices from the original ordering.
-    - olympiad_dataset.jsonl: Proof-based questions where there may not be a clear final answer
+    - HARP_proof-based.jsonl: Proof-based questions where there may not be a clear final answer
+    - HARP_raw.jsonl: Raw, with all problems included (including the 6 calculus problems)
 These files are then put into a ZIP file to make it harder for accidental data contamination in future models.
 """
 
 import os
-import shutil
 import zipfile
 from typing import Any
 
@@ -90,9 +90,8 @@ def prepare_olympiad_dataset(full_dataset: list[dict[str, Any]]) -> list[dict[st
 
 
 def main() -> None:
-    os.makedirs("data/datasets", exist_ok=True)
     dataset = read_jsonl("data/processed/aops_wiki_final.jsonl")
-    write_zipfile(dataset, "data/datasets/full_dataset.jsonl")
+    write_zipfile(dataset, "HARP_raw.jsonl")
 
     # drop calculus problems from dataset splits
     dataset = [p for p in dataset if p["subject"]!= "calculus"]
@@ -105,9 +104,9 @@ def main() -> None:
     print(f"MCQ dataset has length {len(mcq_dataset)}")
     print(f"Proof-based dataset has length {len(olympiad_dataset)}")
 
-    write_zipfile(shortans_dataset, "data/datasets/shortans_dataset.jsonl")
-    write_zipfile(mcq_dataset, "data/datasets/mcq_dataset.jsonl")
-    write_zipfile(olympiad_dataset, "data/datasets/proof_dataset.jsonl")
+    write_zipfile(shortans_dataset, "HARP.jsonl")
+    write_zipfile(mcq_dataset, "HARP_mcq.jsonl")
+    write_zipfile(olympiad_dataset, "HARP_proof-based.jsonl")
 
 
 if __name__ == "__main__":

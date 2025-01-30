@@ -4,9 +4,9 @@
 
 *.png
 
-secrets.sh
+src/secrets.sh
 
-data/raw.zip
-data/raw
-data/MATH
-data/prm800k
+src/data/
+src/inputs
+src/outputs
+src/results

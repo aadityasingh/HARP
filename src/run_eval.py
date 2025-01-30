@@ -13,7 +13,7 @@ import click
 from tqdm.auto import tqdm
 
 from eval.eval import run_one
-from eval.prompts.cot_chat import (
+from eval.prompts import (
     custom_claude_sysprompt,
     gemini_0shot_sysprompt,
     gemini_sysprompt,

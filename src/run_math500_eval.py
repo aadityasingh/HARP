@@ -13,7 +13,7 @@ from eval.api import ModelAPI, safe_unified_api_call
 from eval.latex_answer_check import latex_answer_check
 from eval.parsing_lib import extract_answer
 from eval.prompt import create_prompt
-from eval.prompts.cot_chat import gemini_sysprompt, minerva_4shot_prompt
+from eval.prompts import gemini_sysprompt, minerva_4shot_prompt
 from eval.response import ModelResponse
 from eval.utils import read_jsonl, write_jsonl, load_hendrycks_problem
 

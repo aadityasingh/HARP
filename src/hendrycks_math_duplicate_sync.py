@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # problems were duplicates/one was the subset of the other (due to newline and "Express answer as blah")
     # matches_multi_math = 0
     for p in our_data:
-        if (p['MATH_match']['depth']/len(p[' ']) > frac_thresh) or (p['MATH_match']['depth'] > thresh):
+        if (p['MATH_match']['depth']/len(p['problem']) > frac_thresh) or (p['MATH_match']['depth'] > thresh):
             ctr += 1
             print(p['problem'])
             print('-'*10)

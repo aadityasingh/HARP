@@ -3,12 +3,14 @@ antlr4-python3-runtime==4.11
 attrs
 google-cloud-aiplatform>=1.38
 google-generativeai
+ipywidgets
 jupyterlab
 matplotlib
 openai
 numpy
 pandas
 scipy
+seaborn
 sentencepiece
 sympy
 tiktoken

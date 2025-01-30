@@ -48,7 +48,7 @@ def get_max_depth_and_p_inds(current, s):
     return {"depth": len(s), "matched_inds": flatten_trie(current)}
 
 
-with __name__ == "__main__":
+if __name__ == "__main__":
     end_substr = '<END>'
 
     data = read_jsonl('data/processed/hendrycks_math_ours.jsonl')
@@ -95,7 +95,7 @@ with __name__ == "__main__":
 
     print(np.unique(apply_fn_to_trie(trie, lambda x: [len(x)]), return_counts=True))
 
-    our_data = read_jsonl("data/datasets/full_dataset.jsonl")
+    our_data = read_jsonl("data/processed/HARP_raw.jsonl")
 
     depths = []
     fracs = []
@@ -119,6 +119,6 @@ with __name__ == "__main__":
     axs[1].set_title('Maximum prefix match of HARP problems to any,\nMATH problemnormalized by problem length')
     axs[1].set_xlabel('Length of matching prefix / Length of HARP problem')
 
-    fig.savefig('duplicate_stats.png')
+    fig.savefig('../images/duplicate_stats.pdf')
 
     plt.show()
