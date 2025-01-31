@@ -5,7 +5,7 @@ import time
 import requests
 from tqdm import tqdm
 
-from scraping.aops_wiki.utils import all_year_contest_problem_map, total_problems
+from scraping.utils import all_year_contest_problem_map, total_problems
 
 
 if __name__ == "__main__":

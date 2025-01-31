@@ -16,12 +16,12 @@ from eval.parsing_lib import (
     clean_latex_leftright,
     remove_boxes_keep_content,
 )
-from scraping.aops_wiki.difficulty import map_difficulty
-from scraping.aops_wiki.line_filters import (
+from scraping.difficulty import map_difficulty
+from scraping.line_filters import (
     MANUAL_LINE_FILTERS,
     ASY_DOUBLE_SLASH_CREDIT_COMMENTS
 )
-from scraping.aops_wiki.utils import all_year_contest_problem_map, has_choices, has_answer, total_problems
+from scraping.utils import all_year_contest_problem_map, has_choices, has_answer, total_problems
 
 
 def convert_ordered_list(s: str) -> str:

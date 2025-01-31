@@ -10,7 +10,7 @@ import re
 from typing import Any
 
 from eval.utils import read_jsonl, write_jsonl, get_uid
-from scraping.aops_wiki.process import find_closing_brace
+from scraping.process import find_closing_brace
 
 
 def fix_solutions_manual(problem: dict[str, Any]) -> dict[str, Any]:
